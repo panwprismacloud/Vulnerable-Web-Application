@@ -84,7 +84,7 @@ function create_tables($conn, $db_name){
       die('Could not create table: ' . mysqli_error( $conn));
    }
     #-------------------------------------------------
-   echo "Table books created successfully </br>";
+   echo "Table books 2 created successfully </br>";
 
    $sql = 'CREATE TABLE flags( '.
       'flag VARCHAR(50) NOT NULL)';
