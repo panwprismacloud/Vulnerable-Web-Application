@@ -1,0 +1,24 @@
+steps:
+  - name: 'gcr.io/cloud-builders/curl'
+    id: 'download-and-scan'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - >
+        curl -sL "${_WIZCLI_DOWNLOAD_URL}" -o /usr/local/bin/wizcli && chmod +x /usr/local/bin/wizcli && wizcli scan dir /workspace
+    secretEnv:
+      - WIZ_CLIENT_ID
+      - WIZ_CLIENT_SECRET
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _WIZCLI_DOWNLOAD_URL: 'https://downloads.wiz.io/v1/wizcli/latest/wizcli-linux-amd64'
+
+availableSecrets:
+  secretManager:
+    - versionName: 'projects/${PROJECT_NUMBER}/secrets/cloud-build-client-id/versions/latest'
+      env: WIZ_CLIENT_ID
+    - versionName: 'projects/${PROJECT_NUMBER}/secrets/cloud-build-secret/versions/latest'
+      env: WIZ_CLIENT_SECRET
